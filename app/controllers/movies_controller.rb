@@ -16,7 +16,20 @@ class MoviesController < ApplicationController
       @ratings_to_show = []
     end
 
-    @movies = Movie.with_ratings(@ratings_to_show)
+    @title_class = ""
+    @release_class = ""
+    @sort_key = ""
+
+    case params[:id]
+    when "title_header"
+      @title_class = "hilite"
+      @sort_key = "title"
+    when "release_date_header"
+      @release_class = "hilite"
+      @sort_key = "release_date"
+    end
+
+    @movies = Movie.with_ratings(@ratings_to_show, @sort_key)
   end
 
   def new
