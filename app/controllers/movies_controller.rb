@@ -16,16 +16,16 @@ class MoviesController < ApplicationController
       @ratings_to_show = []
     end
 
-    @title_class = ""
-    @release_class = ""
+    @movie_title_style = ""
+    @release_date_style = ""
     @sort_key = ""
 
-    case params[:id]
-    when "title_header"
-      @title_class = "hilite"
+    case params[:sort]
+    when "title"
+      @movie_title_style = "hilite"
       @sort_key = "title"
-    when "release_date_header"
-      @release_class = "hilite"
+    when "release_date"
+      @release_date_style = "hilite"
       @sort_key = "release_date"
     end
 
