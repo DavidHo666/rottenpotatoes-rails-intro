@@ -14,11 +14,19 @@ class MoviesController < ApplicationController
       reset_session
     end
 
+    @ratings_to_show = session[:ratings_to_show] || @all_ratings
+    @sort_key = session[:sort_key] || ""
+
+    if (!params[:ratings] || !params[:sort]) && @sort_key != ""
+      redirect_to movies_path(:sort => @sort_key,
+                              :ratings => Hash[@ratings_to_show.map { |x| [x, 1]}])
+    end
+
     #ratings
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
     else
-      @ratings_to_show = session[:ratings_to_show] || []
+      @ratings_to_show = session[:ratings_to_show] || @all_ratings
     end
 
     session[:ratings_to_show] = @ratings_to_show
