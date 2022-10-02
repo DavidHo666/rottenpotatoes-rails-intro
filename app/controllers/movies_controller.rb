@@ -26,16 +26,17 @@ class MoviesController < ApplicationController
     @release_date_style = ""
     @sort_key =  session[:sort_key] || ""
 
-    case params[:sort]
+    sort_by = params[:sort] || session[:sort_key]
+    @sort_key = sort_by
+    session[:sort_key] = @sort_key
+
+    case sort_by
     when "title"
       @movie_title_style = "hilite"
-      @sort_key = "title"
     when "release_date"
       @release_date_style = "hilite"
-      @sort_key = "release_date"
     end
 
-    session[:sort_key] = @sort_key
 
     @movies = Movie.with_ratings(@ratings_to_show, @sort_key)
   end
