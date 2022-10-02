@@ -5,6 +5,7 @@ module MoviesHelper
   end
 end
 
+# hilite helper func
 def is_hilite(the_key)
   if @sort_key == the_key
     return "hilite"
