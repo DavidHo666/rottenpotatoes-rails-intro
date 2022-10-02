@@ -8,17 +8,23 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    @all_ratings = Movie.all_ratings
+    @all_ratings =  Movie.all_ratings
+
+    if params[:commit] == "Refresh"
+      reset_session
+    end
 
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
     else
-      @ratings_to_show = []
+      @ratings_to_show = session[:ratings_to_show] || []
     end
+
+    session[:ratings_to_show] = @ratings_to_show
 
     @movie_title_style = ""
     @release_date_style = ""
-    @sort_key = ""
+    @sort_key =  session[:sort_key] || ""
 
     case params[:sort]
     when "title"
@@ -28,6 +34,8 @@ class MoviesController < ApplicationController
       @release_date_style = "hilite"
       @sort_key = "release_date"
     end
+
+    session[:sort_key] = @sort_key
 
     @movies = Movie.with_ratings(@ratings_to_show, @sort_key)
   end
