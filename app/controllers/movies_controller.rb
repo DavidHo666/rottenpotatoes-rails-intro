@@ -9,11 +9,12 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     @all_ratings =  Movie.all_ratings
-
+    #clear session if click refresh
     if params[:commit] == "Refresh"
       reset_session
     end
 
+    #ratings
     if params[:ratings]
       @ratings_to_show = params[:ratings].keys
     else
@@ -22,21 +23,10 @@ class MoviesController < ApplicationController
 
     session[:ratings_to_show] = @ratings_to_show
 
-    @movie_title_style = ""
-    @release_date_style = ""
-    @sort_key =  session[:sort_key] || ""
+    #sort_key
+    @sort_key = params[:sort] || session[:sort_key] || ""
 
-    sort_by = params[:sort] || session[:sort_key]
-    @sort_key = sort_by
     session[:sort_key] = @sort_key
-
-    case sort_by
-    when "title"
-      @movie_title_style = "hilite"
-    when "release_date"
-      @release_date_style = "hilite"
-    end
-
 
     @movies = Movie.with_ratings(@ratings_to_show, @sort_key)
   end

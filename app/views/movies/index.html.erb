@@ -17,13 +17,13 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th class="<%= @movie_title_style %>" >
+      <th class="<%= is_hilite("title") %>" >
         <%= link_to 'Movie Title',
                     movies_path(:sort => "title", :ratings => Hash[@ratings_to_show.map { |x| [x, 1]}]),
                     id:'title_header' %></th>
 
       <th>Rating</th>
-      <th class="<%= @release_date_style %>" >
+      <th class="<%= is_hilite("release_date") %>" >
         <%= link_to 'Release Date',
                     movies_path(:sort => "release_date", :ratings => Hash[@ratings_to_show.map {|x| [x, 1]}]),
                     id:'release_date_header' %></th>
